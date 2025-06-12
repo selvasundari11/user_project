@@ -1,0 +1,354 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Registration</title>
+    <link rel="stylesheet" href="{% static 'accounts/style.css' %}" />
+    <style>
+      .error-message {
+        color: red;
+        font-size: 0.95em;
+        display: block;
+        margin-top: 4px;
+      }
+      .success-message {
+        color: green;
+        font-size: 1.05em;
+        margin-bottom: 12px;
+        display: block;
+      }
+      .required-star {
+        color: red;
+      }
+      .contact-number-group {
+        display: flex;
+        align-items: center;
+      }
+      .dash {
+        margin: 0 5px;
+      }
+      .container {
+        max-width: 500px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>User Registration</h2>
+      {% if success_message %}
+      <span class="success-message">{{ success_message }}</span>
+      {% endif %}
+      <form
+        id="registrationForm"
+        method="post"
+        enctype="multipart/form-data"
+        novalidate
+      >
+        {% csrf_token %}
+        <div>
+          <label for="id_full_name"
+            >Full Name: <span class="required-star">*</span></label
+          >
+          <input
+            type="text"
+            id="id_full_name"
+            name="full_name"
+            maxlength="200"
+            required
+            pattern="^[A-Za-z ]+$"
+            value="{{ form.full_name.value|default_if_none:'' }}"
+            data-error-required="Full Name is required."
+            data-error-pattern="Full Name must contain only letters and spaces."
+          />
+          <span class="error-message" id="id_full_name_error"></span>
+          {% for error in form.full_name.errors %}<span class="error-message"
+            >{{ error }}</span
+          >{% endfor %}
+        </div>
+        <div>
+          <label for="id_email">Email:</label>
+          <input
+            type="email"
+            id="id_email"
+            name="email"
+            required
+            pattern="^[\w\.-]+@[\w\.-]+\.(com|in)$"
+            value="{{ form.email.value|default_if_none:'' }}"
+            data-error-required="Email is required."
+            data-error-pattern="Enter a valid email address ending with .com or .in."
+          />
+          <span class="error-message" id="id_email_error"></span>
+          {% for error in form.email.errors %}<span class="error-message"
+            >{{ error }}</span
+          >{% endfor %}
+        </div>
+        <div>
+          <label for="id_password"
+            >Password: <span class="required-star">*</span></label
+          >
+          <input
+            type="password"
+            id="id_password"
+            name="password"
+            required
+            minlength="8"
+            maxlength="10"
+            pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':&quot;\\|,.<>\/?]).{8,10}$"
+            data-error-required="Password is required."
+            data-error-pattern="Password must be 8-10 chars, include a letter, a number, and a special character."
+          />
+          <span class="error-message" id="id_password_error"></span>
+        </div>
+
+        <div>
+          <label for="id_confirm_password">Confirm Password:</label>
+          <input
+            type="password"
+            id="id_confirm_password"
+            name="confirm_password"
+            required
+            data-match="id_password"
+            data-error-required="Confirm Password is required."
+            data-error-match="Passwords do not match."
+          />
+          <span class="error-message" id="id_confirm_password_error"></span>
+          {% for error in form.confirm_password.errors %}<span
+            class="error-message"
+            >{{ error }}</span
+          >{% endfor %}
+        </div>
+        <div>
+          <label>Contact Number: <span class="required-star">*</span></label>
+          <div class="contact-number-group">
+            <input
+              type="text"
+              id="id_country_code"
+              name="country_code"
+              maxlength="3"
+              required
+              pattern="^\d{3}$"
+              value="{{ form.country_code.value|default_if_none:'' }}"
+              data-error-required="Country code is required."
+              data-error-pattern="Country code must be 3 digits."
+              style="width: 60px"
+            />
+            <span class="dash">-</span>
+            <input
+              type="text"
+              id="id_phone_number"
+              name="phone_number"
+              maxlength="8"
+              required
+              pattern="^\d{8}$"
+              value="{{ form.phone_number.value|default_if_none:'' }}"
+              data-error-required="Phone number is required."
+              data-error-pattern="Phone number must be 8 digits."
+              style="width: 140px"
+            />
+          </div>
+          <span class="error-message" id="id_country_code_error"></span>
+          <span class="error-message" id="id_phone_number_error"></span>
+          {% for error in form.country_code.errors %}<span class="error-message"
+            >{{ error }}</span
+          >{% endfor %} {% for error in form.phone_number.errors %}<span
+            class="error-message"
+            >{{ error }}</span
+          >{% endfor %}
+        </div>
+        <div>
+          <label for="id_dob">Date of Birth:</label>
+          <input
+            type="date"
+            id="id_dob"
+            name="dob"
+            required
+            value="{{ form.dob.value|default_if_none:'' }}"
+            data-error-required="Date of Birth is required."
+            data-error-age="You must be at least 18 years old."
+            data-error-future="Date of Birth cannot be in the future."
+          />
+          <span class="error-message" id="id_dob_error"></span>
+          {% for error in form.dob.errors %}<span class="error-message"
+            >{{ error }}</span
+          >{% endfor %}
+        </div>
+        <div>
+          <label for="id_civil_id"
+            >Civil ID: <span class="required-star">*</span></label
+          >
+          <input
+            type="text"
+            id="id_civil_id"
+            name="civil_id"
+            maxlength="12"
+            required
+            pattern="^\d{12}$"
+            value="{{ form.civil_id.value|default_if_none:'' }}"
+            data-error-required="Civil ID is required."
+            data-error-pattern="Civil ID must be exactly 12 digits."
+            style="width: 180px"
+          />
+          <span class="error-message" id="id_civil_id_error"></span>
+          {% for error in form.civil_id.errors %}<span class="error-message"
+            >{{ error }}</span
+          >{% endfor %}
+        </div>
+        <div>
+          <label for="fileUpload">File Upload:</label>
+          <input type="file" name="file_upload" id="fileUpload" />
+          <span class="error-message" id="fileUpload_error"></span>
+          {% for error in form.file_upload.errors %}<span class="error-message"
+            >{{ error }}</span
+          >{% endfor %}
+        </div>
+        {% if form.non_field_errors %}
+        <div class="error-summary">
+          <ul>
+            {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+        <div>
+          <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
+        </div>
+      </form>
+      <p>
+        Already registered? <a href="{% url 'login' %}">Go to Login Page</a>
+      </p>
+    </div>
+    <script>
+      function validateFile() {
+        const fileInput = document.getElementById("fileUpload");
+        if (!fileInput.value) return ""; // Optional
+        const allowed = ["pdf", "txt", "xlsx", "png"];
+        const ext = fileInput.value.split(".").pop().toLowerCase();
+        if (!allowed.includes(ext)) {
+          return "Allowed formats: PDF, TXT, XLSX, PNG.";
+        }
+        return "";
+      }
+      function showError(input, message) {
+        document.getElementById(input.id + "_error").textContent = message;
+      }
+      function clearError(input) {
+        document.getElementById(input.id + "_error").textContent = "";
+      }
+      function validateInput(input) {
+        let value = input.value.trim();
+        let valid = true;
+        let required = input.hasAttribute("required");
+        let pattern = input.getAttribute("pattern");
+        let minlength = input.getAttribute("minlength");
+        let maxlength = input.getAttribute("maxlength");
+        let errorMsg = "";
+
+        // Required
+        if (required && !value && input.type !== "file") {
+          errorMsg = input.dataset.errorRequired || "This field is required.";
+          valid = false;
+        }
+        // Pattern
+        else if (pattern && value && !new RegExp(pattern).test(value)) {
+          errorMsg = input.dataset.errorPattern || "Invalid entry.";
+          valid = false;
+        }
+        // Minlength
+        else if (minlength && value.length < minlength) {
+          errorMsg = `Minimum ${minlength} characters required.`;
+          valid = false;
+        }
+        // Maxlength
+        else if (maxlength && value.length > maxlength) {
+          errorMsg = `Maximum ${maxlength} characters allowed.`;
+          valid = false;
+        }
+        // Confirm password match
+        else if (input.dataset.match) {
+          let matchElem = document.getElementById(input.dataset.match);
+          if (matchElem && value !== matchElem.value) {
+            errorMsg = input.dataset.errorMatch || "Fields do not match.";
+            valid = false;
+          }
+        }
+        // Date of Birth: check age and future date
+        else if (input.id === "id_dob" && value) {
+          let dob = new Date(value);
+          let today = new Date();
+          if (dob > today) {
+            errorMsg =
+              input.dataset.errorFuture || "Date cannot be in the future.";
+            valid = false;
+          } else {
+            let age = today.getFullYear() - dob.getFullYear();
+            let m = today.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+            if (age < 18) {
+              errorMsg =
+                input.dataset.errorAge || "You must be at least 18 years old.";
+              valid = false;
+            }
+          }
+        }
+        // File validation
+        else if (input.type === "file") {
+          errorMsg = validateFile();
+          if (errorMsg) valid = false;
+        }
+
+        if (!valid) showError(input, errorMsg);
+        else clearError(input);
+
+        return valid;
+      }
+
+      // Validate on blur for text/date inputs
+      document
+        .querySelectorAll("#registrationForm input")
+        .forEach(function (input) {
+          if (input.type !== "file") {
+            input.addEventListener("blur", function () {
+              validateInput(this);
+            });
+          }
+        });
+      // Validate file input on change
+      document
+        .getElementById("fileUpload")
+        .addEventListener("change", function () {
+          validateInput(this);
+        });
+
+      // Validate all on submit
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", function (e) {
+          let valid = true;
+          document
+            .querySelectorAll("#registrationForm input")
+            .forEach(function (input) {
+              if (!validateInput(input)) valid = false;
+            });
+          if (!valid) e.preventDefault();
+        });
+
+      // Prevent non-numeric input for number fields
+      ["id_country_code", "id_phone_number", "id_civil_id"].forEach(function (
+        id
+      ) {
+        let input = document.getElementById(id);
+        if (input) {
+          input.addEventListener("keypress", function (e) {
+            if (e.which < 48 || e.which > 57) e.preventDefault();
+          });
+          input.addEventListener("wheel", function (e) {
+            e.preventDefault();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

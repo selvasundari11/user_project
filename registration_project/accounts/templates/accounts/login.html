@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'accounts/styles.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Login</h2>
+      {% if messages %} {% for message in messages %}
+      <span class="error-message">{{ message }}</span>
+      {% endfor %} {% endif %}
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div>
+          <label for="email">Email Id:</label>
+          {{ form.email }}
+        </div>
+        <div>
+          <label for="id_password">Password:</label>
+          {{ form.password }}
+        </div>
+        <button type="submit" name="signup">Sign in</button>
+        <a href="{% url 'register' %}">
+          <button type="button">Don't have an account? Register</button></a
+        >
+      </form>
+    </div>
+  </body>
+</html>

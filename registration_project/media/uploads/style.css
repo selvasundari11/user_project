@@ -1,0 +1,53 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+form {
+  background: #fff;
+  padding: 20px;
+  margin: 30px auto;
+  width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
+}
+h2 {
+  text-align: center;
+  margin-top: 40px;
+  color: #2c3e50;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="file"] {
+  width: 50%;
+  padding: 8px;
+  margin-top: 3px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button[type="button"] {
+  background: #6c757d;
+}
+.errorlist {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
