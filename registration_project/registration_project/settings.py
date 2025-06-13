@@ -11,14 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv
-import dj_database_url
 import os
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(os.path.join(BASE_DIR/".evar",))
 #BASE_DIR2 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #TEMPLATES_DIR = os.path.join(BASE_DIR2,'templates') 
 #STATIC_DIR = os.path.join(BASE_DIR2,'static') 
@@ -28,13 +24,13 @@ load_dotenv(os.path.join(BASE_DIR/".evar",))
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-(4&2&3$l6^5mi%awd&9$sc2au4kukpl19=s974$67-aath^*3)'
-SECRET_KEY = os.environ.get('SECRET_KEY')
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG")
+SECRET_KEY = 'django-insecure-(4&2&3$l6^5mi%awd&9$sc2au4kukpl19=s974$67-aath^*3)'
 
-ALLOWED_HOSTS =  ["127.0.0.1", "localhost"]  
-ALLOWED_HOSTS += os.environ.get("ALLOWED_HOSTS", "").split()
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = ["selvasundari.pythonanywhere.com", "localhost", "127.0.0.1"]
+
 
 
 # Application definition
@@ -82,27 +78,18 @@ WSGI_APPLICATION = 'registration_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-#DATABASES = {
-    #'default': {
-        #'ENGINE': 'mssql',
-        #'NAME': 'forms',
-        #'USER': 'registration',
-        #'PASSWORD': 'root',
-        #'HOST': 'DESKTOP-PLNE4PP\SQLEXPRESS',
-        #'PORT': '',  # Default MSSQL port
-        #'OPTIONS': {
-         #   'driver': 'ODBC Driver 17 for SQL Server',
-        #},
-    #}
-#}
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
-    )
-    
-    
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'forms',
+        'USER': 'root',
+        'PASSWORD': 'rootroot',
+        'HOST': 'localhost',  # Or your DB host
+        'PORT': '3306',       # Default MySQL port
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
 }
 
 
@@ -152,10 +139,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'welcome'
-
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
