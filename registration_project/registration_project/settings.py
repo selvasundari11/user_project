@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'forms',
         'USER': 'root',
         'PASSWORD': 'rootroot',
-        'HOST': 'localhost',  # Or your DB host
+        'HOST': 'selvasundari.mysql.pythonanywhere-services.com',  # Or your DB host
         'PORT': '3306',       # Default MySQL port
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
