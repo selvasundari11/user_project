@@ -27,10 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(4&2&3$l6^5mi%awd&9$sc2au4kukpl19=s974$67-aath^*3)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["selvasundari.pythonanywhere.com"]
-
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -78,18 +77,15 @@ WSGI_APPLICATION = 'registration_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'forms',
+        'NAME':'forms',
         'USER': 'root',
         'PASSWORD': 'rootroot',
-       'HOST': 'selvasundari.mysql.pythonanywhere-services.com',
-
-        'PORT': '3306',       # Default MySQL port
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'HOST': 'localhost',   # or your MySQL server address
+        'PORT': '3306',         # default MySQL port
     }
 }
 
@@ -131,14 +127,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # source directory for static files
-]
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # destination for collectstatic
-
-
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
