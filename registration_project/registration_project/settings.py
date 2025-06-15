@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'forms',
         'USER': 'root',
         'PASSWORD': 'rootroot',
-        'HOST': '127.0.0.1',  # Or your DB host
+        'HOST': 'localhost',  # Or your DB host
         'PORT': '3306',       # Default MySQL port
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -128,15 +128,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = '/static/'
-# STATICFILES_DIRS should be a list of folders you created manually
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    BASE_DIR / 'static',  # source directory for static files
 ]
 
-#  STATIC_ROOT should be a different folder (for deployment only)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # For your custom static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # destination for collectstatic
+
 
 
 # Default primary key field type
